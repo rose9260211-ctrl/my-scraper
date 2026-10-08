@@ -73,7 +73,8 @@
         .code-tabs { display: flex; gap: 16px; color: #888; font-size: 12px; }
         .code-tabs span { cursor: pointer; }
         .code-tabs span.active { color: white; }
-        .code-body { padding: 20px; font-size: 13px; line-height: 1.7; overflow-x: auto; }
+        .code-body { padding: 20px; font-size: 13px; line-height: 1.7; overflow-x: auto; display: none; }
+        .code-body.active { display: block; }
         .code-body .kw { color: #c792ea; }
         .code-body .str { color: #c3e88d; }
         .code-body .fn { color: #82aaff; }
@@ -84,7 +85,8 @@
         .usecases h2 { font-size: 40px; font-weight: 800; margin-bottom: 50px; }
         .uc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
         .uc-card { background: #1a1a1a; border-radius: 12px; overflow: hidden; }
-        .uc-img { height: 180px; display: flex; align-items: center; justify-content: center; font-size: 64px; background: #222; position: relative; }
+        .uc-img { height: 180px; display: flex; align-items: center; justify-content: center; background: #222; position: relative; overflow: hidden; }
+        .uc-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .uc-img::before, .uc-img::after { content: ''; position: absolute; width: 12px; height: 12px; background: white; }
         .uc-img::before { top: 12px; left: 12px; }
         .uc-img::after { bottom: 12px; right: 12px; }
@@ -127,6 +129,7 @@
         .blog-card p { color: #666; font-size: 13px; }
         .blog-card .blog-meta { color: #999; font-size: 12px; }
         .blog-card a { color: #7c3aed; text-decoration: none; font-size: 13px; font-weight: 600; }
+        .blog-card .blog-cover { width: 100%; height: 140px; object-fit: cover; border-radius: 6px; background: #1a1a1a; }
         
         /* FAQ */
         .faq { max-width: 1100px; margin: 0 auto; padding: 0 40px 80px; }
@@ -200,9 +203,9 @@
         <h2>Turn any webpage into structured data with one API call</h2>
         
         <div class="lang-tabs">
-            <div class="lang-tab active">CURL</div>
-            <div class="lang-tab">PYTHON</div>
-            <div class="lang-tab">JAVASCRIPT</div>
+            <div class="lang-tab active" data-lang="curl">CURL</div>
+            <div class="lang-tab" data-lang="python">PYTHON</div>
+            <div class="lang-tab" data-lang="js">JAVASCRIPT</div>
         </div>
         
         <div class="features-row">
@@ -234,7 +237,7 @@
                     <div class="code-dots"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
                     <div class="code-tabs"><span class="active">REQUEST</span><span>RESPONSE</span></div>
                 </div>
-                <div class="code-body">
+                <div class="code-body active" data-lang="curl">
                     <span class="kw">curl</span> -X POST \<br>
                     &nbsp;&nbsp;https://v2-api.scrapegraphai.com/api/scrape \<br>
                     &nbsp;&nbsp;-H <span class="str">"Content-Type: application/json"</span> \<br>
@@ -246,6 +249,31 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;]<br>
                     &nbsp;&nbsp;<span class="str">}'</span>
                 </div>
+                <div class="code-body" data-lang="python">
+                    <span class="kw">from</span> scrapegraph_py <span class="kw">import</span> ScrapeGraphAI, MarkdownFormatConfig<br>
+                    <span class="kw">import</span> asyncio<br>
+                    <br>
+                    <span class="kw">async def</span> main():<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">async with</span> ScrapeGraphAI() <span class="kw">as</span> sgai:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;res = <span class="kw">await</span> sgai.scrape(<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url=<span class="str">"https://docs.example.com/getting-started"</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;formats=[MarkdownFormatConfig()],<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">print</span>(res)<br>
+                    <br>
+                    asyncio.<span class="fn">run</span>(main())
+                </div>
+                <div class="code-body" data-lang="js">
+                    <span class="kw">import</span> { scrape } <span class="kw">from</span> <span class="str">'scrapegraph-js'</span>;<br>
+                    <br>
+                    <span class="kw">const</span> res = <span class="kw">await</span> scrape({<br>
+                    &nbsp;&nbsp;apiKey: process.env.SGAI_API_KEY,<br>
+                    &nbsp;&nbsp;url: <span class="str">'https://docs.example.com/getting-started'</span>,<br>
+                    &nbsp;&nbsp;formats: [<span class="str">'markdown'</span>],<br>
+                    });<br>
+                    <br>
+                    <span class="fn">console</span>.log(res);
+                </div>
             </div>
         </div>
     </div>
@@ -255,37 +283,37 @@
         <h2>Use Cases</h2>
         <div class="uc-grid">
             <div class="uc-card">
-                <div class="uc-img">🛒</div>
+                <div class="uc-img"><img src="images/uc-price.png" alt="Price Monitoring Bot"></div>
                 <h3>Price Monitoring Bot</h3>
                 <div class="uc-tags">AMAZON · EBAY · SHOPIFY</div>
                 <p>Track competitor prices on Amazon, eBay, and other e-commerce sites. Get alerts when prices drop or inventory changes.</p>
             </div>
             <div class="uc-card">
-                <div class="uc-img">🎣</div>
+                <div class="uc-img"><img src="images/uc-lead.png" alt="Lead Generation Tool"></div>
                 <h3>Lead Generation Tool</h3>
                 <div class="uc-tags">LINKEDIN · TWITTER · CONTACTS</div>
                 <p>Extract LinkedIn profiles, Twitter accounts, and contact information at scale without getting blocked.</p>
             </div>
             <div class="uc-card">
-                <div class="uc-img">🔍</div>
+                <div class="uc-img"><img src="images/uc-market.png" alt="Market Research Dashboard"></div>
                 <h3>Market Research Dashboard</h3>
                 <div class="uc-tags">REVIEWS · RATINGS · SENTIMENT</div>
                 <p>Aggregate reviews, ratings, and sentiment from multiple sites. Build comprehensive competitor analysis.</p>
             </div>
             <div class="uc-card">
-                <div class="uc-img">🏠</div>
+                <div class="uc-img"><img src="images/uc-realestate.png" alt="Real Estate Tracker"></div>
                 <h3>Real Estate Tracker</h3>
                 <div class="uc-tags">ZILLOW · REDFIN · RENTALS</div>
                 <p>Monitor property listings on Zillow, Redfin, and local sites. Track price changes and new listings.</p>
             </div>
             <div class="uc-card">
-                <div class="uc-img">🤖</div>
+                <div class="uc-img"><img src="images/uc-mcp.png" alt="MCP Server"></div>
                 <h3>MCP Server</h3>
                 <div class="uc-tags">CLAUDE · CURSOR · AI WORKFLOWS</div>
                 <p>Connect AI assistants directly to the web via Model Context Protocol. Enable Claude, Cursor, and other AI tools to scrape data in real-time.</p>
             </div>
             <div class="uc-card">
-                <div class="uc-img">⚡</div>
+                <div class="uc-img"><img src="images/uc-agent.png" alt="AI Agent Tool"></div>
                 <h3>AI Agent Tool</h3>
                 <div class="uc-tags">RAG · AGENTS · REAL-TIME</div>
                 <p>Provide agents with extremely fast web access. Perfect for RAG pipelines, autonomous research, and real-time data enrichment.</p>
@@ -369,6 +397,7 @@
         <h2>Blogs</h2>
         <div class="blog-grid">
             <div class="blog-card">
+                <img class="blog-cover" src="images/blog-v2.png" alt="ScrapeGraphAI V2">
                 <div class="blog-num">[[ 01 ]]</div>
                 <h3>ScrapeGraphAI V2: Better, Faster and Cheaper</h3>
                 <p>ScrapeGraphAI V2 brings scrape, extract, search, crawl, monitor, events, and history into one cleaner API for production web data workflows.</p>
@@ -376,6 +405,7 @@
                 <a href="https://scrapegraphai.com/blog/scrapegraphai-v2" target="_blank" rel="noopener">Read more →</a>
             </div>
             <div class="blog-card">
+                <img class="blog-cover" src="images/blog-cli.png" alt="ScrapeGraphAI CLI">
                 <div class="blog-num">[[ 02 ]]</div>
                 <h3>ScrapeGraphAI CLI: Web Scraping From Your Terminal</h3>
                 <p>Install just-scrape and run AI-powered scraping, extraction, search, and crawling from your terminal. A practical guide with examples.</p>
@@ -383,6 +413,7 @@
                 <a href="https://scrapegraphai.com/blog/scrapegraphai-cli" target="_blank" rel="noopener">Read more →</a>
             </div>
             <div class="blog-card">
+                <img class="blog-cover" src="images/blog-mcp.png" alt="ScrapeGraphAI MCP Server">
                 <div class="blog-num">[[ 03 ]]</div>
                 <h3>ScrapeGraphAI MCP Server: Give Your AI the Web</h3>
                 <p>Connect Claude, Cursor, and any MCP client to live web data. Set up the MCP server with the hosted endpoint or a local install in minutes.</p>
@@ -460,6 +491,16 @@
         // FAQ accordion
         document.querySelectorAll('.faq-q').forEach(q => {
             q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
+        });
+        
+        // Language tab switcher
+        document.querySelectorAll('.lang-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.lang-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.code-body').forEach(b => b.classList.remove('active'));
+                tab.classList.add('active');
+                document.querySelector('.code-body[data-lang="' + tab.dataset.lang + '"]').classList.add('active');
+            });
         });
         
         async function scrape() {

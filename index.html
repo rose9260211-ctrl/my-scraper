@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScrapeGraphAI - The scraper for the AI Era</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'SF Mono', Menlo, Monaco, Consolas, monospace;
+               background: #f0f0f0; color: #1a1a1a; line-height: 1.6; }
+        
+        .top-banner { background: #7c3aed; color: white; text-align: center; 
+                      padding: 8px 20px; font-size: 13px; font-weight: 600; letter-spacing: 0.5px; }
+        .top-banner a { color: white; text-decoration: underline; }
+        
+        nav { background: #1a1a1a; padding: 14px 40px; display: flex; 
+              justify-content: space-between; align-items: center; }
+        .nav-logo { display: flex; align-items: center; gap: 10px; color: white; font-weight: 700; font-size: 20px; }
+        .nav-center { display: flex; gap: 28px; }
+        .nav-center a { color: #ccc; text-decoration: none; font-size: 13px; font-weight: 600; }
+        .nav-center a:hover { color: white; }
+        .nav-right { display: flex; gap: 12px; align-items: center; color: #ccc; font-size: 13px; font-weight: 600; }
+        
+        .hero { position: relative; padding: 70px 40px 50px; text-align: center; overflow: hidden; }
+        .hero-bg-text { position: absolute; inset: 0; opacity: 0.06; font-size: 11px; line-height: 1.4; overflow: hidden; pointer-events: none; }
+        .hero-stats { position: relative; z-index: 1; color: #666; font-size: 14px; margin-bottom: 24px; font-weight: 600; }
+        .hero h1 { position: relative; z-index: 1; font-size: 64px; font-weight: 800; line-height: 1.05; letter-spacing: -2px; margin-bottom: 36px; }
+        .hero-buttons { position: relative; z-index: 1; display: flex; gap: 16px; justify-content: center; }
+        .btn-docs { background: white; color: #111; padding: 14px 28px; border: 2px solid #111;
+                    border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 14px; }
+        .btn-start { background: #7c3aed; color: white; padding: 14px 28px; border: none;
+                     border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 14px; }
+        
+        .scraper-box { position: relative; z-index: 1; max-width: 1100px; margin: 40px auto 0;
+                       background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+        .scraper-input { width: 100%; padding: 16px; border: none; outline: none; font-size: 16px; font-family: inherit; }
+        .scraper-bottom { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 12px; border-top: 1px solid #eee; }
+        .tabs { display: flex; gap: 24px; }
+        .tab { padding: 8px 4px; cursor: pointer; font-weight: 600; font-size: 14px; color: #999; border-bottom: 2px solid transparent; }
+        .tab.active { color: #111; border-bottom-color: #7c3aed; }
+        .btn-scrape { background: #7c3aed; color: white; padding: 12px 24px; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 14px; font-family: inherit; }
+        
+        .result { margin-top: 16px; padding: 16px; background: #1a1a1a; color: #4ade80; border-radius: 8px; display: none; white-space: pre-wrap; font-size: 13px; max-height: 400px; overflow-y: auto; text-align: left; }
+        .loading { text-align: center; padding: 20px; display: none; color: #666; }
+        .spinner { width: 24px; height: 24px; border: 3px solid #ddd; border-top-color: #7c3aed; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 8px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        /* Why section */
+        .why { max-width: 1100px; margin: 0 auto; padding: 80px 40px; }
+        .why-label { text-align: center; color: #888; font-size: 14px; letter-spacing: 1px; margin-bottom: 16px; }
+        .why h2 { text-align: center; font-size: 40px; font-weight: 800; line-height: 1.2; margin-bottom: 50px; }
+        
+        .lang-tabs { display: flex; gap: 20px; margin-bottom: 30px; }
+        .lang-tab { padding: 8px 16px; border: 1px solid #ccc; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; color: #888; }
+        .lang-tab.active { border-color: #7c3aed; color: #7c3aed; }
+        
+        .features-row { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; align-items: start; }
+        .feature-item { padding: 24px 0; border-bottom: 1px solid #ddd; }
+        .feature-item h3 { font-size: 22px; margin-bottom: 8px; }
+        .feature-item p { color: #666; font-size: 14px; }
+        
+        .code-window { background: #1a1a1a; border-radius: 10px; overflow: hidden; }
+        .code-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid #333; }
+        .code-dots { display: flex; gap: 6px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .dot.red { background: #ff5f57; } .dot.yellow { background: #febc2e; } .dot.green { background: #28c840; }
+        .code-tabs { display: flex; gap: 16px; color: #888; font-size: 12px; }
+        .code-tabs span { cursor: pointer; }
+        .code-tabs span.active { color: white; }
+        .code-body { padding: 20px; font-size: 13px; line-height: 1.7; overflow-x: auto; }
+        .code-body .kw { color: #c792ea; }
+        .code-body .str { color: #c3e88d; }
+        .code-body .fn { color: #82aaff; }
+        
+        /* Use Cases */
+        .usecases { max-width: 1100px; margin: 0 auto; padding: 80px 40px; text-align: center; }
+        .usecases .label { color: #888; font-size: 14px; letter-spacing: 1px; margin-bottom: 16px; }
+        .usecases h2 { font-size: 40px; font-weight: 800; margin-bottom: 50px; }
+        .uc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .uc-card { background: #1a1a1a; border-radius: 12px; overflow: hidden; }
+        .uc-img { height: 180px; display: flex; align-items: center; justify-content: center; font-size: 64px; background: #222; position: relative; }
+        .uc-img::before, .uc-img::after { content: ''; position: absolute; width: 12px; height: 12px; background: white; }
+        .uc-img::before { top: 12px; left: 12px; }
+        .uc-img::after { bottom: 12px; right: 12px; }
+        .uc-card h3 { color: white; padding: 20px; text-align: left; font-size: 18px; }
+        .uc-card p { color: #999; padding: 0 20px 20px; text-align: left; font-size: 14px; }
+        
+        footer { background: #1a1a1a; color: #888; text-align: center; padding: 40px; margin-top: 40px; }
+    </style>
+</head>
+<body>
+    <div class="top-banner">
+        🚀 INTRODUCING SCRAPEGRAPHAI V2 — BETTER, FASTER, CHEAPER APIS. 
+        <a href="#">READ THE BLOG →</a>
+    </div>
+    
+    <nav>
+        <div class="nav-logo">🕷️ ScrapeGraphAI</div>
+        <div class="nav-center">
+            <a href="#">PRICING</a><a href="#">BLOG</a><a href="#">DOCS</a>
+            <a href="#">FOR STARTUPS</a><a href="#">RESOURCES ▾</a>
+        </div>
+        <div class="nav-right">
+            <a href="#" style="color:#ccc;text-decoration:none">SIGN IN</a> <span>//</span>
+            <a href="#" style="color:white;text-decoration:none">SIGN UP</a> <span>⭐ 31.6K</span> <span>//</span>
+            <a href="#" style="color:#ccc;text-decoration:none">BOOK A CALL</a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="hero-bg-text" id="bg-text"></div>
+        <div class="hero-stats">⭐ 31.6k+ GitHub stars &nbsp;/&nbsp; 250M+ webpages extracted &nbsp;/&nbsp; 1M+ users</div>
+        <h1>The scraper for<br>the AI Era</h1>
+        <div class="hero-buttons">
+            <a href="#" class="btn-docs">READ THE DOCUMENTATION →</a>
+            <a href="#scraper" class="btn-start">GET STARTED →</a>
+        </div>
+        
+        <div class="scraper-box" id="scraper">
+            <input type="url" class="scraper-input" id="url" placeholder="https://example.com" value="https://news.ycombinator.com">
+            <div class="scraper-bottom">
+                <div class="tabs">
+                    <div class="tab active">Scrape</div>
+                    <div class="tab">Extract</div>
+                    <div class="tab">Search</div>
+                    <div class="tab">Crawl</div>
+                </div>
+                <button class="btn-scrape" onclick="scrape()">START SCRAPING</button>
+            </div>
+            <div class="loading" id="loading"><div class="spinner"></div><p>AI is analyzing...</p></div>
+            <div class="result" id="result"></div>
+        </div>
+    </div>
+
+    <div class="why">
+        <div class="why-label">// WHY SCRAPEGRAPHAI</div>
+        <h2>Turn any webpage into structured data with one API call</h2>
+        
+        <div class="lang-tabs">
+            <div class="lang-tab active">CURL</div>
+            <div class="lang-tab">PYTHON</div>
+            <div class="lang-tab">JAVASCRIPT</div>
+        </div>
+        
+        <div class="features-row">
+            <div>
+                <div class="feature-item">
+                    <h3>Scrape</h3>
+                    <p>Convert any webpage to clean, well-formatted Markdown. Documentation, content migration, or preparing context for LLMs.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Extract</h3>
+                    <p>Extract structured data from any webpage using natural language prompts. Define a schema and get back clean JSON.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Search</h3>
+                    <p>Search the web and extract structured data from results in one call. Market research, competitor analysis.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Crawl</h3>
+                    <p>Crawl all pages on a website and get structured data for each link. Site-wide extraction, content audits.</p>
+                </div>
+            </div>
+            
+            <div class="code-window">
+                <div class="code-header">
+                    <div class="code-dots"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
+                    <div class="code-tabs"><span class="active">REQUEST</span><span>RESPONSE</span></div>
+                </div>
+                <div class="code-body">
+                    <span class="kw">curl</span> -X POST \<br>
+                    &nbsp;&nbsp;https://v2-api.scrapegraphai.com/api/scrape \<br>
+                    &nbsp;&nbsp;-H <span class="str">"Content-Type: application/json"</span> \<br>
+                    &nbsp;&nbsp;-H <span class="str">"SGAI-APIKEY: $SGAI_API_KEY"</span> \<br>
+                    &nbsp;&nbsp;-d <span class="str">'{'</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"url"</span>: <span class="str">"https://docs.example.com/getting-started"</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"formats"</span>: [<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="str">"type"</span>: <span class="str">"markdown"</span> }<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;]<br>
+                    &nbsp;&nbsp;<span class="str">}'</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="usecases">
+        <div class="label">// BUILT FOR EVERY WORKFLOW</div>
+        <h2>Use Cases</h2>
+        <div class="uc-grid">
+            <div class="uc-card">
+                <div class="uc-img">🛒</div>
+                <h3>Price Monitoring Bot</h3>
+                <p>Track prices across hundreds of product pages and get alerted when prices drop.</p>
+            </div>
+            <div class="uc-card">
+                <div class="uc-img">🎣</div>
+                <h3>Lead Generation Tool</h3>
+                <p>Extract contact info, company details, and decision-maker names from any website.</p>
+            </div>
+            <div class="uc-card">
+                <div class="uc-img">🔍</div>
+                <h3>Market Research Dashboard</h3>
+                <p>Monitor trends, competitor pricing, and industry news — all structured and ready to analyze.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>ScrapeGraphAI © 2026 · Open Source · Local-First · Privacy-First</footer>
+
+    <script>
+        const snippets = ['const scraper = new ScrapeGraphAI();', 'await scraper.run(url);', 
+            '{ "title": "...", "data": [...] }', 'import { SmartScraperGraph }', 
+            'llm: "openai/gpt-4"', 'graph.execute(inputs);', 'webpage -> structured data'];
+        const lines = [];
+        for (let i = 0; i < 300; i++) lines.push(snippets[Math.floor(Math.random()*snippets.length)]);
+        document.getElementById('bg-text').textContent = lines.join('\\n');
+        
+        async function scrape() {
+            const url = document.getElementById('url').value;
+            const btn = document.querySelector('.btn-scrape');
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            if (!url) { alert('Please enter a URL'); return; }
+            btn.textContent = 'SCRAPING...'; btn.disabled = true;
+            loading.style.display = 'block'; result.style.display = 'none';
+            try {
+                const res = await fetch('/api/scrape', { method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({url, prompt: 'Extract the main content from this page'}) });
+                const data = await res.json();
+                result.textContent = JSON.stringify(data, null, 2);
+                result.style.display = 'block';
+            } catch(e) { result.textContent = 'Error: ' + e.message; result.style.display = 'block'; }
+            btn.textContent = 'START SCRAPING'; btn.disabled = false; loading.style.display = 'none';
+        }
+    </script>
+</body>
+</html>

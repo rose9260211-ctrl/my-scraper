@@ -22,10 +22,15 @@
         .nav-right { display: flex; gap: 12px; align-items: center; color: #ccc; font-size: 13px; font-weight: 600; }
         .nav-right a:hover { color: white; }
         
-        .hero { position: relative; padding: 70px 40px 50px; text-align: center; overflow: hidden; }
-        .hero-bg-text { position: absolute; inset: 0; opacity: 0.06; font-size: 11px; line-height: 1.4; overflow: hidden; pointer-events: none; }
+        .hero { position: relative; padding: 70px 40px 50px; text-align: center; overflow: hidden;
+                background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(124,58,237,0.14), transparent 60%), #f0f0f0; }
+        .hero-bg-text { position: absolute; inset: 0; opacity: 0.055; font-size: 11px; line-height: 1.4; overflow: hidden; pointer-events: none; }
+        .hero-grid { position: absolute; inset: 0; pointer-events: none;
+                     background-image: linear-gradient(rgba(124,58,237,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(124,58,237,0.05) 1px, transparent 1px);
+                     background-size: 48px 48px; }
         .hero-stats { position: relative; z-index: 1; color: #666; font-size: 14px; margin-bottom: 24px; font-weight: 600; }
         .hero h1 { position: relative; z-index: 1; font-size: 64px; font-weight: 800; line-height: 1.05; letter-spacing: -2px; margin-bottom: 36px; }
+        .hero h1 .accent { color: #7c3aed; }
         .hero-buttons { position: relative; z-index: 1; display: flex; gap: 16px; justify-content: center; }
         .btn-docs { background: white; color: #111; padding: 14px 28px; border: 2px solid #111;
                     border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 14px; }
@@ -83,23 +88,78 @@
         .uc-img::before, .uc-img::after { content: ''; position: absolute; width: 12px; height: 12px; background: white; }
         .uc-img::before { top: 12px; left: 12px; }
         .uc-img::after { bottom: 12px; right: 12px; }
-        .uc-card h3 { color: white; padding: 20px; text-align: left; font-size: 18px; }
-        .uc-card p { color: #999; padding: 0 20px 20px; text-align: left; font-size: 14px; }
+        .uc-card h3 { color: white; padding: 20px 20px 6px; text-align: left; font-size: 18px; }
+        .uc-card .uc-tags { color: #7c3aed; padding: 0 20px; text-align: left; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; }
+        .uc-card p { color: #999; padding: 8px 20px 20px; text-align: left; font-size: 14px; }
+        .uc-cta { margin-top: 40px; color: #666; font-size: 15px; }
+        .uc-cta .btn-docs { margin: 0 6px; }
         
-        footer { background: #1a1a1a; color: #888; text-align: center; padding: 40px; margin-top: 40px; }
+        /* AI integrations */
+        .ai-integrations { max-width: 1100px; margin: 0 auto; padding: 80px 40px; text-align: center; }
+        .ai-grid { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin-top: 30px; }
+        .ai-card { background: white; border: 1px solid #ddd; border-radius: 10px; padding: 18px 26px; min-width: 180px;
+                   display: flex; flex-direction: column; gap: 8px; align-items: center; }
+        .ai-card .ai-name { font-size: 16px; font-weight: 700; }
+        .ai-card a { color: #7c3aed; text-decoration: none; font-size: 12px; font-weight: 600; }
+        .ai-card a:hover { text-decoration: underline; }
+        
+        /* Official integrations */
+        .official { max-width: 1100px; margin: 0 auto; padding: 60px 40px 80px; text-align: center; }
+        .off-grid { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 30px; }
+        .off-item { background: white; border: 1px solid #ddd; border-radius: 8px; padding: 12px 20px; font-size: 13px; font-weight: 600; color: #444; }
+        
+        /* Comparison table */
+        .compare { max-width: 1100px; margin: 0 auto; padding: 0 40px 80px; }
+        .compare table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+        .compare th, .compare td { padding: 13px 16px; text-align: left; border-bottom: 1px solid #eee; font-size: 13px; }
+        .compare th { background: #1a1a1a; color: white; font-size: 12px; letter-spacing: 0.5px; }
+        .compare td:first-child { font-weight: 600; }
+        .yes { color: #16a34a; font-weight: 700; }
+        .no { color: #bbb; }
+        
+        /* Blog */
+        .blog { max-width: 1100px; margin: 0 auto; padding: 0 40px 80px; }
+        .blog h2 { text-align: center; font-size: 40px; font-weight: 800; margin-bottom: 40px; }
+        .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .blog-card { background: white; border: 1px solid #ddd; border-radius: 10px; padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+        .blog-card .blog-num { color: #7c3aed; font-size: 12px; font-weight: 700; }
+        .blog-card h3 { font-size: 17px; line-height: 1.4; }
+        .blog-card p { color: #666; font-size: 13px; }
+        .blog-card .blog-meta { color: #999; font-size: 12px; }
+        .blog-card a { color: #7c3aed; text-decoration: none; font-size: 13px; font-weight: 600; }
+        
+        /* FAQ */
+        .faq { max-width: 1100px; margin: 0 auto; padding: 0 40px 80px; }
+        .faq h2 { text-align: center; font-size: 40px; font-weight: 800; margin-bottom: 40px; }
+        .faq-item { background: white; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 12px; overflow: hidden; }
+        .faq-q { padding: 16px 20px; cursor: pointer; font-weight: 700; font-size: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .faq-q .arrow { color: #7c3aed; transition: transform 0.2s; }
+        .faq-item.open .arrow { transform: rotate(45deg); }
+        .faq-a { display: none; padding: 0 20px 16px; color: #555; font-size: 14px; }
+        .faq-item.open .faq-a { display: block; }
+        
+        /* CTA */
+        .cta { background: #1a1a1a; color: white; text-align: center; padding: 80px 40px; }
+        .cta h2 { font-size: 36px; font-weight: 800; margin-bottom: 12px; }
+        .cta p { color: #999; font-size: 14px; margin-bottom: 28px; }
+        
+        footer { background: #1a1a1a; color: #888; text-align: center; padding: 40px 40px 48px; }
+        footer .footer-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 16px; flex-wrap: wrap; }
+        footer a { color: #ccc; text-decoration: none; font-size: 13px; }
+        footer a:hover { color: white; }
     </style>
 </head>
 <body>
     <div class="top-banner">
         🚀 INTRODUCING SCRAPEGRAPHAI V2 — BETTER, FASTER, CHEAPER APIS. 
-        <a href="#">READ THE BLOG →</a>
+        <a href="https://scrapegraphai.com/blog/scrapegraphai-v2" target="_blank" rel="noopener">READ THE BLOG →</a>
     </div>
     
     <nav>
         <div class="nav-logo">🕷️ ScrapeGraphAI</div>
         <div class="nav-center">
-            <a href="#">BLOG</a><a href="#">DOCS</a>
-            <a href="#">FOR STARTUPS</a><a href="#">RESOURCES ▾</a>
+            <a href="#why">BLOG</a><a href="#docs">DOCS</a>
+            <a href="#use-cases">FOR STARTUPS</a><a href="#resources">RESOURCES ▾</a>
         </div>
         <div class="nav-right">
             <a href="https://x.com/scrapegraphai" target="_blank" rel="noopener" title="X (Twitter)" style="color:#ccc;text-decoration:none;display:inline-flex;align-items:center"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L7.486 3.24H5.298Z"/></svg></a>
@@ -111,10 +171,11 @@
 
     <div class="hero">
         <div class="hero-bg-text" id="bg-text"></div>
+        <div class="hero-grid"></div>
         <div class="hero-stats">⭐ 31.6k+ GitHub stars &nbsp;/&nbsp; 250M+ webpages extracted &nbsp;/&nbsp; 1M+ users</div>
-        <h1>The scraper for<br>the AI Era</h1>
+        <h1>The scraper for<br>the <span class="accent">AI</span> Era</h1>
         <div class="hero-buttons">
-            <a href="#" class="btn-docs">READ THE DOCUMENTATION →</a>
+            <a href="#docs" class="btn-docs">READ THE DOCUMENTATION →</a>
             <a href="#scraper" class="btn-start">GET STARTED →</a>
         </div>
         
@@ -134,7 +195,7 @@
         </div>
     </div>
 
-    <div class="why">
+    <div class="why" id="why">
         <div class="why-label">// WHY SCRAPEGRAPHAI</div>
         <h2>Turn any webpage into structured data with one API call</h2>
         
@@ -162,6 +223,10 @@
                     <h3>Crawl</h3>
                     <p>Crawl all pages on a website and get structured data for each link. Site-wide extraction, content audits.</p>
                 </div>
+                <div class="feature-item">
+                    <h3>Monitor</h3>
+                    <p>Watch webpages for changes and get notified via webhook. Price tracking, content updates, and competitor intelligence.</p>
+                </div>
             </div>
             
             <div class="code-window">
@@ -185,37 +250,217 @@
         </div>
     </div>
 
-    <div class="usecases">
+    <div class="usecases" id="use-cases">
         <div class="label">// BUILT FOR EVERY WORKFLOW</div>
         <h2>Use Cases</h2>
         <div class="uc-grid">
             <div class="uc-card">
                 <div class="uc-img">🛒</div>
                 <h3>Price Monitoring Bot</h3>
-                <p>Track prices across hundreds of product pages and get alerted when prices drop.</p>
+                <div class="uc-tags">AMAZON · EBAY · SHOPIFY</div>
+                <p>Track competitor prices on Amazon, eBay, and other e-commerce sites. Get alerts when prices drop or inventory changes.</p>
             </div>
             <div class="uc-card">
                 <div class="uc-img">🎣</div>
                 <h3>Lead Generation Tool</h3>
-                <p>Extract contact info, company details, and decision-maker names from any website.</p>
+                <div class="uc-tags">LINKEDIN · TWITTER · CONTACTS</div>
+                <p>Extract LinkedIn profiles, Twitter accounts, and contact information at scale without getting blocked.</p>
             </div>
             <div class="uc-card">
                 <div class="uc-img">🔍</div>
                 <h3>Market Research Dashboard</h3>
-                <p>Monitor trends, competitor pricing, and industry news — all structured and ready to analyze.</p>
+                <div class="uc-tags">REVIEWS · RATINGS · SENTIMENT</div>
+                <p>Aggregate reviews, ratings, and sentiment from multiple sites. Build comprehensive competitor analysis.</p>
+            </div>
+            <div class="uc-card">
+                <div class="uc-img">🏠</div>
+                <h3>Real Estate Tracker</h3>
+                <div class="uc-tags">ZILLOW · REDFIN · RENTALS</div>
+                <p>Monitor property listings on Zillow, Redfin, and local sites. Track price changes and new listings.</p>
+            </div>
+            <div class="uc-card">
+                <div class="uc-img">🤖</div>
+                <h3>MCP Server</h3>
+                <div class="uc-tags">CLAUDE · CURSOR · AI WORKFLOWS</div>
+                <p>Connect AI assistants directly to the web via Model Context Protocol. Enable Claude, Cursor, and other AI tools to scrape data in real-time.</p>
+            </div>
+            <div class="uc-card">
+                <div class="uc-img">⚡</div>
+                <h3>AI Agent Tool</h3>
+                <div class="uc-tags">RAG · AGENTS · REAL-TIME</div>
+                <p>Provide agents with extremely fast web access. Perfect for RAG pipelines, autonomous research, and real-time data enrichment.</p>
+            </div>
+        </div>
+        <div class="uc-cta">
+            Don't see your use case? Our AI adapts to any website structure.
+            <a href="#scraper" class="btn-start" style="display:inline-block;padding:12px 24px;font-size:13px">START BUILDING NOW →</a>
+        </div>
+    </div>
+
+    <div class="ai-integrations" id="resources">
+        <div class="why-label">// AI ASSISTANT INTEGRATION</div>
+        <h2>Model Context Protocol, Skills &amp; CLI</h2>
+        <p style="color:#888;font-size:14px">Use ScrapeGraphAI in</p>
+        <div class="ai-grid">
+            <div class="ai-card">
+                <div class="ai-name">Claude</div>
+                <a href="https://docs.scrapegraphai.com/integrations/claude" target="_blank" rel="noopener">Use Claude with MCP →</a>
+            </div>
+            <div class="ai-card">
+                <div class="ai-name">Codex</div>
+                <a href="https://docs.scrapegraphai.com/integrations/codex" target="_blank" rel="noopener">Use Codex with MCP →</a>
+            </div>
+            <div class="ai-card">
+                <div class="ai-name">Gemini</div>
+                <a href="https://docs.scrapegraphai.com/integrations/gemini" target="_blank" rel="noopener">Use Gemini with MCP →</a>
+            </div>
+            <div class="ai-card">
+                <div class="ai-name">Skill</div>
+                <a href="https://skills.sh/scrapegraphai/just-scrape/just-scrape" target="_blank" rel="noopener">Install Skill →</a>
+            </div>
+            <div class="ai-card">
+                <div class="ai-name">CLI</div>
+                <a href="https://github.com/ScrapeGraphAI/just-scrape" target="_blank" rel="noopener">Install CLI →</a>
             </div>
         </div>
     </div>
 
-    <footer>ScrapeGraphAI © 2026 · Open Source · Local-First · Privacy-First</footer>
+    <div class="official">
+        <div class="why-label">// CONNECT WITH YOUR STACK</div>
+        <h2>Official Integrations</h2>
+        <div class="off-grid">
+            <div class="off-item">Python SDK</div>
+            <div class="off-item">JavaScript SDK</div>
+            <div class="off-item">CLI</div>
+            <div class="off-item">MCP</div>
+            <div class="off-item">LangChain</div>
+            <div class="off-item">CrewAI</div>
+            <div class="off-item">LlamaIndex</div>
+            <div class="off-item">Agno</div>
+            <div class="off-item">Vercel AI</div>
+            <div class="off-item">LiteLLM</div>
+            <div class="off-item">Hermes</div>
+            <div class="off-item">OpenClaw</div>
+            <div class="off-item">Smithery</div>
+            <div class="off-item">n8n</div>
+            <div class="off-item">Zapier</div>
+            <div class="off-item">Make</div>
+        </div>
+    </div>
+
+    <div class="compare" id="docs">
+        <div class="why-label" style="text-align:center">// HOW WE COMPARE</div>
+        <h2 style="text-align:center;font-size:40px;font-weight:800;margin:0 0 40px">Features Comparison</h2>
+        <table>
+            <tr><th>Feature</th><th>ScrapeGraphAI</th><th>Scrapy</th><th>BeautifulSoup</th><th>Selenium</th></tr>
+            <tr><td>AI-Powered Extraction</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+            <tr><td>Zero Maintenance</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+            <tr><td>Automatic Proxy Management</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+            <tr><td>JavaScript Rendering</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td></tr>
+            <tr><td>Auto-Adapts to Changes</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+            <tr><td>Built-in Rate Limiting</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+            <tr><td>Cloud-Ready API</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+            <tr><td>AI-Agent Ready</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+            <tr><td>Enterprise Support</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+        </table>
+    </div>
+
+    <div class="blog">
+        <h2>Blogs</h2>
+        <div class="blog-grid">
+            <div class="blog-card">
+                <div class="blog-num">[[ 01 ]]</div>
+                <h3>ScrapeGraphAI V2: Better, Faster and Cheaper</h3>
+                <p>ScrapeGraphAI V2 brings scrape, extract, search, crawl, monitor, events, and history into one cleaner API for production web data workflows.</p>
+                <div class="blog-meta">Francesco Zuppichini · Apr 24, 2026</div>
+                <a href="https://scrapegraphai.com/blog/scrapegraphai-v2" target="_blank" rel="noopener">Read more →</a>
+            </div>
+            <div class="blog-card">
+                <div class="blog-num">[[ 02 ]]</div>
+                <h3>ScrapeGraphAI CLI: Web Scraping From Your Terminal</h3>
+                <p>Install just-scrape and run AI-powered scraping, extraction, search, and crawling from your terminal. A practical guide with examples.</p>
+                <div class="blog-meta">Marco Vinciguerra · May 30, 2026</div>
+                <a href="https://scrapegraphai.com/blog/scrapegraphai-cli" target="_blank" rel="noopener">Read more →</a>
+            </div>
+            <div class="blog-card">
+                <div class="blog-num">[[ 03 ]]</div>
+                <h3>ScrapeGraphAI MCP Server: Give Your AI the Web</h3>
+                <p>Connect Claude, Cursor, and any MCP client to live web data. Set up the MCP server with the hosted endpoint or a local install in minutes.</p>
+                <div class="blog-meta">Marco Vinciguerra · Jun 26, 2026</div>
+                <a href="https://scrapegraphai.com/blog/scrapegraphai-mcp-server" target="_blank" rel="noopener">Read more →</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="faq">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+            <div class="faq-q">What is ScrapeGraphAI? <span class="arrow">+</span></div>
+            <div class="faq-a">ScrapeGraphAI is an AI-powered web scraping API that lets you extract structured data from any website using natural language prompts. No complex selectors, no brittle scripts. Just describe what you want and get clean JSON back.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">How does AI-powered web scraping work? <span class="arrow">+</span></div>
+            <div class="faq-a">You send a URL and a natural language prompt describing the data you need. Our AI models read and understand the page content, then extract exactly the fields you asked for, returned as structured JSON. It handles dynamic content, SPAs, and messy HTML automatically.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Do I need to write CSS selectors or XPath to scrape websites? <span class="arrow">+</span></div>
+            <div class="faq-a">No. ScrapeGraphAI uses large language models to understand page content semantically. You describe what you want in plain English. No selectors, no regex, no DOM traversal. The AI figures out where the data lives.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">What data formats does the web scraping API support? <span class="arrow">+</span></div>
+            <div class="faq-a">All responses come back as structured JSON matching your prompt. You can also provide a JSON schema to enforce exact output shapes, perfect for feeding data directly into your pipeline or database.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Is ScrapeGraphAI free to use? <span class="arrow">+</span></div>
+            <div class="faq-a">Yes. The free plan includes 500 API credits, enough to test the API and build a proof of concept. Paid plans start at $20/month with 10,000 credits and scale up from there.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Can ScrapeGraphAI scrape JavaScript-rendered pages and SPAs? <span class="arrow">+</span></div>
+            <div class="faq-a">Yes. ScrapeGraphAI handles JavaScript-heavy pages, single-page applications, and dynamically loaded content out of the box. No need to manage headless browsers yourself.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">How fast is the ScrapeGraphAI API? <span class="arrow">+</span></div>
+            <div class="faq-a">Most requests complete in 2-10 seconds depending on page complexity and the amount of data extracted. Frequently requested URLs are cached, so repeat calls come back almost instantly.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Is there an MCP server for AI agents? <span class="arrow">+</span></div>
+            <div class="faq-a">Yes. We provide an official MCP (Model Context Protocol) server so AI agents like Claude, Cursor, and Windsurf can use ScrapeGraphAI as a tool directly. Install it with one command and your agent gets web scraping superpowers.</div>
+        </div>
+    </div>
+
+    <div class="cta">
+        <h2>Give your AI Agent superpowers with lightning-fast web data!</h2>
+        <p>// READY TO START</p>
+        <a href="#scraper" class="btn-start" style="display:inline-block">GET STARTED →</a>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="https://scrapegraphai.com/" target="_blank" rel="noopener">Website</a>
+            <a href="https://docs.scrapegraphai.com/" target="_blank" rel="noopener">Documentation</a>
+            <a href="https://github.com/ScrapeGraphAI" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://x.com/scrapegraphai" target="_blank" rel="noopener">X</a>
+            <a href="https://discord.gg/gkxQDAjfeX" target="_blank" rel="noopener">Discord</a>
+            <a href="https://scrapegraphai.com/privacy" target="_blank" rel="noopener">Privacy</a>
+            <a href="https://scrapegraphai.com/terms" target="_blank" rel="noopener">Terms</a>
+        </div>
+        ScrapeGraphAI © 2026 · Open Source · Local-First · Privacy-First
+    </footer>
 
     <script>
         const snippets = ['const scraper = new ScrapeGraphAI();', 'await scraper.run(url);', 
             '{ "title": "...", "data": [...] }', 'import { SmartScraperGraph }', 
-            'llm: "openai/gpt-4"', 'graph.execute(inputs);', 'webpage -> structured data'];
+            'llm: "openai/gpt-4"', 'graph.execute(inputs);', 'webpage -> structured data',
+            'curl -X POST /api/scrape', 'SGAI-APIKEY: $SGAI_API_KEY', '"type": "markdown"',
+            'scraper.extract(url, schema)', 'search(query, numResults)', 'monitor(url, interval)'];
         const lines = [];
-        for (let i = 0; i < 300; i++) lines.push(snippets[Math.floor(Math.random()*snippets.length)]);
+        for (let i = 0; i < 500; i++) lines.push(snippets[Math.floor(Math.random()*snippets.length)]);
         document.getElementById('bg-text').textContent = lines.join('\\n');
+        
+        // FAQ accordion
+        document.querySelectorAll('.faq-q').forEach(q => {
+            q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
+        });
         
         async function scrape() {
             const url = document.getElementById('url').value;

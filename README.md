@@ -85,3 +85,12 @@ goes live at `https://<user>-my-scraper.hf.space`.
 - Public deployments should set `RATE_PER_MINUTE`, `DAILY_QUOTA` and, if the
   page is hosted separately, `PUBLIC_API_KEY` — otherwise anyone can spend your
   LLM credits.
+
+## Tools
+
+| Script | What it does |
+| --- | --- |
+| `tools/github_push.py <owner>/<repo> <branch>` | push HEAD through the GitHub REST API (useful when `git push` cannot reach github.com) |
+| `tools/deploy_hf.py <space-name>` | create/update a Hugging Face Docker Space and set the `DEEPSEEK_API_KEY` secret |
+| `tools/screenshot.py [url] [out.png] [--full] [--width 390]` | render a page with Playwright, report JS errors, save a screenshot |
+| `smoke_test.py [base_url]` | hit every API endpoint against a running server |

@@ -1,0 +1,40 @@
+我的网页抓取工具 - 使用说明
+============================
+
+【每次使用前先做】
+1. 确保 Ollama 在运行（任务栏右下角有个小羊图标就说明在跑）
+2. 打开 PowerShell，进到这个目录:
+   cd D:\projects\my-scraper
+
+【方式一：网页版（推荐）】
+1. 启动本地服务:
+   .\.venv\Scripts\python.exe server.py
+2. 浏览器打开 http://127.0.0.1:8000
+3. 页面顶部有四个功能标签，点一个再用:
+   - SCRAPE  : 输入网址，转成干净 Markdown
+   - EXTRACT : 输入网址，AI 提取结构化数据（可以自己描述要提取什么）
+   - SEARCH  : 输入关键词，AI 联网搜索并汇总答案
+   - CRAWL   : 输入网址，整站爬取（默认最多 10 页）
+   也可以点代码框的 CURL / PYTHON / JAVASCRIPT 看对应写法
+4. 停止服务: 在 PowerShell 按 Ctrl+C
+
+【方式二：命令行】
+   .\.venv\Scripts\python.exe scrape.py scrape <网址>
+   .\.venv\Scripts\python.exe scrape.py extract <网址> "提取前5条新闻标题和链接"
+   .\.venv\Scripts\python.exe scrape.py search "sustainable packaging trends 2026"
+   .\.venv\Scripts\python.exe scrape.py crawl <网址> 5
+   .\.venv\Scripts\python.exe scrape.py monitor <网址>
+
+【例子】
+抓知乎热榜:
+   .\.venv\Scripts\python.exe scrape.py extract https://www.zhihu.com/hot "列出今天热榜前10个问题和热度"
+
+抓新闻网站:
+   .\.venv\Scripts\python.exe scrape.py scrape https://news.baidu.com
+
+【注意】
+- 第一次抓大网站会慢，因为本地AI要逐段分析
+- 如果超时，换个内容少的页面试试
+- 模型用的是本地 llama3.2，免费，不需要联网付费
+- 线上版 (https://rose9260211-ctrl.github.io/my-scraper/) 只展示页面，
+  完整爬虫功能要在本地跑 server.py 才能用（GitHub Pages 不支持 Python）

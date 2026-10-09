@@ -1,0 +1,8 @@
+.venv
+.git
+__pycache__
+*.pyc
+使用说明.txt
+index.old.html
+server.old.py
+.env

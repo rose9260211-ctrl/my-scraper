@@ -15,3 +15,7 @@ wheels/
 # Local backups
 *.old.html
 *.old.py
+
+# Local build/lock artifacts
+uv.lock
+/shot-*.png
